@@ -4,34 +4,81 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>LocalDate</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID" />
-            <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" asp-format="{0:yyyy-MM-dd}" class="form-control" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
-                <input asp-for="EndDate" asp-format="{0:yyyy-MM-dd HH:mm:ss}" class="form-control" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h1 class="display-4">
+                <i class="bi bi-pencil-square"></i> Edit Entry
+            </h1>
+            <p class="text-muted">Update the date information below</p>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <form asp-action="Edit" novalidate>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Please fix the following errors:</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+                        <input type="hidden" asp-for="ID" />
+
+                        <div class="mb-3">
+                            <label asp-for="StartDate" class="form-label fw-bold">
+                                <i class="bi bi-calendar-check"></i> Start Date
+                            </label>
+                            <input asp-for="StartDate" asp-format="{0:yyyy-MM-dd}" class="form-control form-control-lg border-primary" placeholder="Enter start date" />
+                            <span asp-validation-for="StartDate" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="EndDate" class="form-label fw-bold">
+                                <i class="bi bi-calendar-event"></i> End Date
+                            </label>
+                            <input asp-for="EndDate" asp-format="{0:yyyy-MM-dd HH:mm:ss}" class="form-control form-control-lg border-success" placeholder="Enter end date" />
+                            <span asp-validation-for="EndDate" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-sm-flex mt-4">
+                            <button type="submit" class="btn btn-warning btn-lg flex-grow-1">
+                                <i class="bi bi-save"></i> Save Changes
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary btn-lg">
+                                <i class="bi bi-arrow-left"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-info-circle"></i> Entry Information
+                    </h5>
+                    <dl class="row">
+                        <dt class="col-sm-4">Entry ID</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge bg-secondary">@Model.ID</span>
+                        </dd>
+                        <dt class="col-sm-4">Current Start</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge bg-info">@Model.StartDate.ToString("MMM dd, yyyy")</span>
+                        </dd>
+                        <dt class="col-sm-4">Current End</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge bg-warning text-dark">@Model.EndDate.ToString("MMM dd, yyyy HH:mm")</span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {

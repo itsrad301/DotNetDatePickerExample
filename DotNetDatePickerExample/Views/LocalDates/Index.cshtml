@@ -1,41 +1,104 @@
 ﻿@model IEnumerable<DateExample.DataModel.LocalDate>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Local Dates";
 }
 
-<h1>Index</h1>
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h1 class="display-4">
+                <i class="bi bi-calendar-event"></i> Local Dates
+            </h1>
+            <p class="text-muted">Manage your date entries</p>
+        </div>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <a asp-action="Create" class="btn btn-success btn-lg">
+                <i class="bi bi-plus-circle"></i> Create New Entry
+            </a>
+        </div>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="text-light">
+                                    <i class="bi bi-calendar-range"></i> 
+                                    @{
+                                        var firstItem = Model.FirstOrDefault();
+                                        if (firstItem != null)
+                                        {
+                                            @Html.DisplayNameFor(model => firstItem.StartDate)
+                                        }
+                                        else
+                                        {
+                                            <text>Start Date</text>
+                                        }
+                                    }
+                                </th>
+                                <th class="text-light">
+                                    <i class="bi bi-calendar-x"></i> 
+                                    @{
+                                        if (firstItem != null)
+                                        {
+                                            @Html.DisplayNameFor(model => firstItem.EndDate)
+                                        }
+                                        else
+                                        {
+                                            <text>End Date</text>
+                                        }
+                                    }
+                                </th>
+                                <th class="text-light text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-info text-dark">
+                                            @Html.DisplayFor(modelItem => item.StartDate)
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-warning text-dark">
+                                            @Html.DisplayFor(modelItem => item.EndDate)
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-sm btn-primary">
+                                            <i class="bi bi-pencil-square"></i> Edit
+                                        </a>
+                                        <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-sm btn-info">
+                                            <i class="bi bi-eye"></i> Details
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-sm btn-danger">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <strong><i class="bi bi-info-circle"></i> No entries found</strong>
+            <p class="mb-0">Start by creating your first date entry!</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+</div>
